@@ -11,4 +11,8 @@ public class Counters {
     public Counters () {
         counterList = ftpSaia.counterListFromSaia();
     }
+
+    public Counter getCounter(int index) {
+        return counterList.get(index);
+    }
 }
