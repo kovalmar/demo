@@ -10,11 +10,11 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ftpSaia {
-    static final String server = "89.239.98.11";
-    static final int port = 6090;
-    static final String user = "monitoring";
-    static final String pass = "Bal@)15Plaza";
+public class FtpSaia {
+    static final String SERVER = "89.239.98.11";
+    static final int PORT = 6090;
+    static final String USER = "monitoring";
+    static final String PASS = "Bal@)15Plaza";
 
     static private FTPClient ftpClient = new FTPClient();
 
@@ -22,8 +22,8 @@ public class ftpSaia {
         LinkedList<Counter> cntList = new LinkedList<Counter>();
         String ftpFileName = "/INTFLASH/ENERGYLOG/CONFIG.TXT";
         try {
-            ftpClient.connect(server, port);
-            ftpClient.login(user, pass);
+            ftpClient.connect(SERVER, PORT);
+            ftpClient.login(USER, PASS);
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
