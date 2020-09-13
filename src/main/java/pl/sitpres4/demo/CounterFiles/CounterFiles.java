@@ -2,6 +2,7 @@ package pl.sitpres4.demo.CounterFiles;
 
 import lombok.Data;
 import pl.sitpres4.demo.Counter.Counter;
+import pl.sitpres4.demo.Data.DataFromFTP;
 import pl.sitpres4.demo.Data.FtpSaia;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class CounterFiles {
 
     public CounterFiles(Counter counter) {
         this.counter = counter;
-        this.fileNames = FtpSaia.getFileNameList(counter.getFtpFileNameMask());
+        //this.fileNames = FtpSaia.getFileNames(counter.getFtpFileNameMask());
+        this.fileNames = DataFromFTP.getInstance().getFileNames(counter);
     }
 }

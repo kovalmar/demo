@@ -81,20 +81,14 @@ public class FtpSaia {
         return cntList;
     }
 
-    public static List<String> getFileNameList(String fileMask) {
+    public static List<String> getFileNames(String fileMask) {
         ArrayList<String> fileNameList = new ArrayList<String>();
         try {
             connectSaiaFTP();
-            ftpClient.changeWorkingDirectory(DATA_DIRECTORY_NAME);
 
-            FTPFile[] fileList;
-            if (fileMask.isEmpty()) {
-                fileList = ftpClient.listFiles("");
-            }
-            else {
-                FTPFileFilter filter = ftpFile -> (ftpFile.isFile() && ftpFile.getName().contains(fileMask));
-                fileList = ftpClient.listFiles("", filter);
-            }
+            FTPFileFilter filter = ftpFile -> (ftpFile.isFile() && ftpFile.getName().contains(fileMask));
+            ftpClient.changeWorkingDirectory(DATA_DIRECTORY_NAME);
+            FTPFile[] fileList = ftpClient.listFiles("", filter);
 
             // prepare list of names to be returned
             for (FTPFile f: fileList) {

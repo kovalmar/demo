@@ -1,12 +1,15 @@
 package pl.sitpres4.demo.Data;
 
+import org.apache.commons.collections.CollectionUtils;
 import pl.sitpres4.demo.Counter.Counter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataFromFTP {
     private static final DataFromFTP instance = new DataFromFTP();
-    private List<Counter> configCounters;
-    private List<String> fileNameList;
+    private List<Counter> countersFromConfig;
+    private List<String> fileNames;
 
     //private constructor to avoid client applications to use constructor
     private DataFromFTP(){}
@@ -15,33 +18,46 @@ public class DataFromFTP {
         return instance;
     }
 
-    private void setConfigCounters() {
-        configCounters = FtpSaia.counterListFromSaia();
+    private void setCountersFromConfig() {
+        countersFromConfig = FtpSaia.counterListFromSaia();
     }
 
-    private void setFileNameList() {
-        fileNameList = FtpSaia.getFileNameList("");
+    private void setFileNames() {
+        fileNames = FtpSaia.getFileNames("CNT");
     }
 
-    public List<Counter> getConfigCounters() {
-        return getConfigCounters(false);
+    public List<Counter> getCountersFromConfig() {
+        return getCountersFromConfig(false);
     }
 
-    public List<Counter> getConfigCounters(boolean actual) {
-        if (configCounters == null || actual) {
-            setConfigCounters();
+    public List<Counter> getCountersFromConfig(boolean actual) {
+        if (countersFromConfig == null || actual) {
+            setCountersFromConfig();
         }
-        return configCounters;
+        return countersFromConfig;
     }
 
-    public List<String> getFileList() {
-        return getFileList(false);
+    public List<String> getFileNames() {
+        return getFileNames(false);
     }
 
-    public List<String> getFileList(boolean actual) {
-        if (fileNameList == null || actual) {
-            setFileNameList();
+    public List<String> getFileNames(boolean actual) {
+        if (fileNames == null || actual) {
+            setFileNames();
         }
-        return fileNameList;
+        return fileNames;
+    }
+
+    public List<String> getFileNames(Counter counter) {
+        return getFileNames(counter,false);
+    }
+
+    public List<String> getFileNames(Counter counter, boolean actual) {
+        if (fileNames == null || actual) {
+            setFileNames();
+        }
+        ArrayList<String> output = new ArrayList<>(fileNames);
+        CollectionUtils.filter(output, o -> ((String) o).contains(counter.getFtpFileNameMask()));
+        return output;
     }
 }
