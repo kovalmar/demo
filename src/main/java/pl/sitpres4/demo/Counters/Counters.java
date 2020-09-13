@@ -3,7 +3,7 @@ import pl.sitpres4.demo.Counter.Counter;
 import java.util.List;
 import lombok.Getter;
 import pl.sitpres4.demo.DemoApplication;
-import pl.sitpres4.demo.FtpSaia;
+import pl.sitpres4.demo.Data.FtpSaia;
 
 public class Counters {
     @Getter
