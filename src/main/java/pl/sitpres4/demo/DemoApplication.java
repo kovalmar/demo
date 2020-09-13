@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.sitpres4.demo.Counters.Counters;
+import pl.sitpres4.demo.Data.DataFromFTP;
 
 @SpringBootApplication
 @RestController
 public class DemoApplication {
-    public static Counters counters;
-
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
