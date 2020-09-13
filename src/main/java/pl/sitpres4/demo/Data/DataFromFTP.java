@@ -53,11 +53,19 @@ public class DataFromFTP {
     }
 
     public List<String> getFileNames(Counter counter, boolean actual) {
+        return getFileNames(counter.getFtpFileNameMask(), actual);
+    }
+
+    public List<String> getFileNames(String fileMask) {
+        return getFileNames(fileMask,false);
+    }
+
+    public List<String> getFileNames(String fileMask, boolean actual) {
         if (fileNames == null || actual) {
             setFileNames();
         }
         ArrayList<String> output = new ArrayList<>(fileNames);
-        CollectionUtils.filter(output, o -> ((String) o).contains(counter.getFtpFileNameMask()));
+        CollectionUtils.filter(output, o -> ((String) o).contains(fileMask));
         return output;
     }
 }

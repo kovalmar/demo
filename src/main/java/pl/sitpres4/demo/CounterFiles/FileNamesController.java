@@ -8,12 +8,12 @@ import java.util.List;
 
 @RestController
 public class FileNamesController {
-    @GetMapping("/filenames")
+    @GetMapping("/files")
     public List<String> fileNames() {
         return DataFromFTP.getInstance().getFileNames();
     }
 
-    @GetMapping("/filenames/refresh")
+    @GetMapping("/files/refresh")
     public List<String> fileNamesRefresh() {
         return DataFromFTP.getInstance().getFileNames(true);
     }
