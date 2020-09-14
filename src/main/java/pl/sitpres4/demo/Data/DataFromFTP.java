@@ -4,12 +4,17 @@ import org.apache.commons.collections.CollectionUtils;
 import pl.sitpres4.demo.Counter.Counter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DataFromFTP {
     private static final DataFromFTP instance = new DataFromFTP();
     private List<Counter> countersFromConfig;
+    private Date countersFromConfigLastUpdated;
     private List<String> fileNames;
+    private Date fileNamesLastUpdated;
+    public final static String COUNTERS_FROM_CONFIG = "countersFromConfig";
+    public final static String FILE_NAMES = "fileNames";
 
     //private constructor to avoid client applications to use constructor
     private DataFromFTP(){}
@@ -18,12 +23,25 @@ public class DataFromFTP {
         return instance;
     }
 
+    public Date getLastUpdated(String dataName) {
+        switch (dataName) {
+            case COUNTERS_FROM_CONFIG:
+                return countersFromConfigLastUpdated;
+            case FILE_NAMES:
+                return fileNamesLastUpdated;
+            default:
+                return null;
+        }
+    }
+
     private void setCountersFromConfig() {
         countersFromConfig = FtpSaia.counterListFromSaia();
+        countersFromConfigLastUpdated = new Date(System.currentTimeMillis());
     }
 
     private void setFileNames() {
         fileNames = FtpSaia.getFileNames("CNT");
+        fileNamesLastUpdated = new Date(System.currentTimeMillis());
     }
 
     public List<Counter> getCountersFromConfig() {
