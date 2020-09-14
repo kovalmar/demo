@@ -3,6 +3,7 @@ package pl.sitpres4.demo.Data;
 import org.apache.commons.collections.CollectionUtils;
 import pl.sitpres4.demo.Counter.Counter;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 public class DataFromFTP {
     private static final DataFromFTP instance = new DataFromFTP();
     private List<Counter> countersFromConfig;
-    private Date countersFromConfigLastUpdated;
+    private ZonedDateTime countersFromConfigLastUpdated;
     private List<String> fileNames;
-    private Date fileNamesLastUpdated;
+    private ZonedDateTime fileNamesLastUpdated;
     public final static String COUNTERS_FROM_CONFIG = "countersFromConfig";
     public final static String FILE_NAMES = "fileNames";
 
@@ -23,7 +24,7 @@ public class DataFromFTP {
         return instance;
     }
 
-    public Date getLastUpdated(String dataName) {
+    public ZonedDateTime getLastUpdated(String dataName) {
         switch (dataName) {
             case COUNTERS_FROM_CONFIG:
                 return countersFromConfigLastUpdated;
@@ -36,12 +37,12 @@ public class DataFromFTP {
 
     private void setCountersFromConfig() {
         countersFromConfig = FtpSaia.counterListFromSaia();
-        countersFromConfigLastUpdated = new Date(System.currentTimeMillis());
+        countersFromConfigLastUpdated = ZonedDateTime.now();
     }
 
     private void setFileNames() {
         fileNames = FtpSaia.getFileNames("CNT");
-        fileNamesLastUpdated = new Date(System.currentTimeMillis());
+        fileNamesLastUpdated = ZonedDateTime.now();
     }
 
     public List<Counter> getCountersFromConfig() {
