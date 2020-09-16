@@ -3,9 +3,10 @@ package pl.sitpres4.demo.CounterFile;
 import lombok.Data;
 import pl.sitpres4.demo.Data.DataFromFTP;
 
+import java.util.List;
+
 @Data
 public class CounterFile {
-//TODO
     String fileName;
     boolean exists;
 

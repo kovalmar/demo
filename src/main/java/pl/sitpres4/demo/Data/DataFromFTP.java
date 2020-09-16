@@ -87,4 +87,8 @@ public class DataFromFTP {
         CollectionUtils.filter(output, o -> ((String) o).contains(fileMask));
         return output;
     }
+
+    public static List<String> getDataFromFile(String name) {
+        return FtpSaia.getDataFromFile(name);
+    }
 }
