@@ -12,7 +12,7 @@ import javax.xml.crypto.Data;
 
 @RestController
 public class CounterFilesController {
-    @GetMapping("/counters/{number}/filenames")
+    @GetMapping("/counters/{number}/files")
     public CounterFiles counterFiles(@PathVariable("number") String number) {
         return new CounterFiles(DataFromFTP.getInstance().getCountersFromConfig().get(Integer.parseInt(number)));
     }

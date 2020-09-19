@@ -4,11 +4,9 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
-import org.springframework.integration.ftp.dsl.Ftp;
 import pl.sitpres4.demo.Counter.Counter;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class FtpSaia {
     static final int PORT = 6090;
     static final String USER = "monitoring";
     static final String PASS = "Bal@)15Plaza";
-    static final String DATA_DIRECTORY_NAME = "/M1_FLASH/LOG5M";
+    static final String DATA_DIRECTORY_PATH = "/M1_FLASH/LOG5M";
     static final String CONFIG_FILE_PATH = "/INTFLASH/ENERGYLOG/CONFIG.TXT";
 
     static private FTPClient ftpClient = new FTPClient();
@@ -59,7 +57,7 @@ public class FtpSaia {
                 if (!line.isEmpty()) {
                     if (line.startsWith("[Counter ")) {
                         newCounter = true;
-                        cntList.add(new Counter(FtpSaia.idGen.incrementAndGet(),line));
+                        cntList.add(new Counter(FtpSaia.idGen.incrementAndGet()-1,line));
                     }
                     if (newCounter) {
                         if (line.startsWith("Name = ")) {
@@ -87,7 +85,7 @@ public class FtpSaia {
             connectSaiaFTP();
 
             FTPFileFilter filter = ftpFile -> (ftpFile.isFile() && ftpFile.getName().contains(fileMask));
-            ftpClient.changeWorkingDirectory(DATA_DIRECTORY_NAME);
+            ftpClient.changeWorkingDirectory(DATA_DIRECTORY_PATH);
             FTPFile[] fileList = ftpClient.listFiles("", filter);
 
             // prepare list of names to be returned
@@ -125,5 +123,26 @@ public class FtpSaia {
             disconnectSaiaFTP();
         }
         return fileList;
+    }
+
+    public static List<String> getDataFromFile(String name) {
+        ArrayList<String> dataList = new ArrayList<String>();
+        try {
+            connectSaiaFTP();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(ftpClient.retrieveFileStream(DATA_DIRECTORY_PATH + "/" + name)));
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                dataList.add(line);
+            }
+            reader.close();
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        finally {
+            disconnectSaiaFTP();
+        }
+        return dataList;
     }
 }

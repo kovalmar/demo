@@ -14,7 +14,6 @@ public class CounterFiles {
 
     public CounterFiles(Counter counter) {
         this.counter = counter;
-        //this.fileNames = FtpSaia.getFileNames(counter.getFtpFileNameMask());
         this.fileNames = DataFromFTP.getInstance().getFileNames(counter);
     }
 }
