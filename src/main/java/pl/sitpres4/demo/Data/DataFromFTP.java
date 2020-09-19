@@ -91,17 +91,13 @@ public class DataFromFTP {
         return output;
     }
 
-    public List<DataRowEnergy> getDataFromFile(String ftpFileName) {
-        List<String> dataFromFile = FtpSaia.getDataFromFile(ftpFileName);
-        if (DataRowEnergy.energyCounter(dataFromFile))
-            return getEnergyCounterData(dataFromFile);
-        else
-            return null;
+    public List<String> getDataFromFile(String ftpFileName) {
+        return FtpSaia.getDataFromFile(ftpFileName);
     }
 
     private List<DataRowEnergy> getEnergyCounterData(List<String> dataFromFile) {
         boolean header = true;
-        ArrayList<DataRowEnergy> output = new ArrayList<DataRowEnergy>();
+        ArrayList<DataRowEnergy> output = new ArrayList<>();
         for (String line : dataFromFile) {
             if (!header) {
                 output.add(new DataRowEnergy(line));
