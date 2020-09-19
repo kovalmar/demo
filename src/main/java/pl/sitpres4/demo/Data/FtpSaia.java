@@ -53,11 +53,18 @@ public class FtpSaia {
 
             String line = null;
             Boolean newCounter = false;
+            int cntCounter = 0;
             while ((line = reader.readLine()) != null) {
                 if (!line.isEmpty()) {
                     if (line.startsWith("[Counter ")) {
                         newCounter = true;
-                        cntList.add(new Counter(FtpSaia.idGen.incrementAndGet()-1,line));
+                        cntList.add(new Counter(cntCounter,line));
+                        if (cntList.getLast().counterFileExists()) {
+                            cntCounter++;
+                        }
+                        else {
+                            cntList.removeLast();
+                        }
                     }
                     if (newCounter) {
                         if (line.startsWith("Name = ")) {
