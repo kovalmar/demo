@@ -57,7 +57,7 @@ public class FtpSaia {
                 if (!line.isEmpty()) {
                     if (line.startsWith("[Counter ")) {
                         newCounter = true;
-                        cntList.add(new Counter(FtpSaia.idGen.incrementAndGet(),line));
+                        cntList.add(new Counter(FtpSaia.idGen.incrementAndGet()-1,line));
                     }
                     if (newCounter) {
                         if (line.startsWith("Name = ")) {

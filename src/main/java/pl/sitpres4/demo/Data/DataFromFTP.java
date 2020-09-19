@@ -2,6 +2,8 @@ package pl.sitpres4.demo.Data;
 
 import org.apache.commons.collections.CollectionUtils;
 import pl.sitpres4.demo.Counter.Counter;
+import pl.sitpres4.demo.CounterData.DataRow;
+import pl.sitpres4.demo.CounterData.DataRowEnergy;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -18,9 +20,10 @@ public class DataFromFTP {
     public final static String FILE_NAMES = "fileNames";
 
     //private constructor to avoid client applications to use constructor
-    private DataFromFTP(){}
+    private DataFromFTP() {
+    }
 
-    public static DataFromFTP getInstance(){
+    public static DataFromFTP getInstance() {
         return instance;
     }
 
@@ -68,7 +71,7 @@ public class DataFromFTP {
     }
 
     public List<String> getFileNames(Counter counter) {
-        return getFileNames(counter,false);
+        return getFileNames(counter, false);
     }
 
     public List<String> getFileNames(Counter counter, boolean actual) {
@@ -76,7 +79,7 @@ public class DataFromFTP {
     }
 
     public List<String> getFileNames(String fileMask) {
-        return getFileNames(fileMask,false);
+        return getFileNames(fileMask, false);
     }
 
     public List<String> getFileNames(String fileMask, boolean actual) {
@@ -88,7 +91,24 @@ public class DataFromFTP {
         return output;
     }
 
-    public static List<String> getDataFromFile(String name) {
-        return FtpSaia.getDataFromFile(name);
+    public List<DataRowEnergy> getDataFromFile(String ftpFileName) {
+        List<String> dataFromFile = FtpSaia.getDataFromFile(ftpFileName);
+        if (DataRowEnergy.energyCounter(dataFromFile))
+            return getEnergyCounterData(dataFromFile);
+        else
+            return null;
+    }
+
+    private List<DataRowEnergy> getEnergyCounterData(List<String> dataFromFile) {
+        boolean header = true;
+        ArrayList<DataRowEnergy> output = new ArrayList<DataRowEnergy>();
+        for (String line : dataFromFile) {
+            if (!header) {
+                output.add(new DataRowEnergy(line));
+            } else {
+                header = false;
+            }
+        }
+        return output;
     }
 }

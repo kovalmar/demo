@@ -7,14 +7,14 @@ import java.util.List;
 
 @Data
 public class CounterData {
-    List<String> data;
+    List<DataRowEnergy> data;
 
     public CounterData() {};
 
     public CounterData(String fileName)
     {
         if (!DataFromFTP.getInstance().getFileNames(fileName).isEmpty()) {
-            this.data = DataFromFTP.getDataFromFile(fileName);
+            this.data = DataFromFTP.getInstance().getDataFromFile(fileName);
         }
     }
 }
