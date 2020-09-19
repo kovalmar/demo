@@ -1,12 +1,14 @@
 package pl.sitpres4.demo.Counter;
 
 import java.util.Calendar;
+import java.util.List;
 
 import lombok.Data;
+import pl.sitpres4.demo.Data.DataFromFTP;
 
 @Data
 public class Counter {
-    private Long id;
+    private int id;
     private Integer number;
     private Integer subNumber;
     private String name;
@@ -14,7 +16,7 @@ public class Counter {
 
     protected Counter() {}
 
-    public Counter(Long id, String counterNumber) {
+    public Counter(int id, String counterNumber) {
         if (counterNumber.startsWith("[Counter")) {
             this.id = id;
             String s = counterNumber.substring("[Counter ".length(), counterNumber.length() - 1);
@@ -49,6 +51,12 @@ public class Counter {
         ftpFileNameMask = String.format("CNT%s_",cNum);
 
     }
+
+    // returns true if any file for given Counter exist
+    public boolean counterFileExists() {
+        return !DataFromFTP.getInstance().getFileNames(this.ftpFileNameMask).isEmpty();
+    }
+
 //TODO
     public String getFtpFileName(Calendar reportDate) {
         return String.format(ftpFileNameMask,

@@ -41,7 +41,12 @@ public class DataFromFTP {
     private void setCountersFromConfig() {
         countersFromConfig = FtpSaia.counterListFromSaia();
         countersFromConfigLastUpdated = ZonedDateTime.now();
+        for (Counter c: this.countersFromConfig) {
+
+        }
     }
+
+
 
     private void setFileNames() {
         fileNames = FtpSaia.getFileNames("CNT");
