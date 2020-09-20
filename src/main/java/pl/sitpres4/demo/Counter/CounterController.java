@@ -9,7 +9,6 @@ import pl.sitpres4.demo.Data.DataFromFTP;
 import pl.sitpres4.demo.DemoApplication;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CounterController {
     @GetMapping("/counters/{number}")
     public Counter counter(@PathVariable("number") String number) {
