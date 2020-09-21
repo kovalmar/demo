@@ -10,9 +10,7 @@ import java.util.List;
 
 @Data
 public class CounterData {
-    int counterType; // 1 - energy counter
-    String[] dataHeader;
-    List<String[]> data;
+    List<DataRowFull> data;
 
     public CounterData() {}
 
@@ -20,15 +18,8 @@ public class CounterData {
     {
         if (!DataFromFTP.getInstance().getFileNames(fileName).isEmpty()) {
             data = new ArrayList<>();
-            setDataAndHeader(DataFromFTP.getInstance().getDataFromFile(fileName));
+            setData(DataFromFTP.getInstance().getDataFromFile(fileName));
         }
-    }
-
-    private void setTypeAndHeader(String headerLine) {
-        if (energyCounter(headerLine)) {
-            setCounterType(1);
-        }
-        this.dataHeader = headerLine.split(";");
     }
 
     private boolean energyCounter(String headerLine) {
@@ -36,20 +27,12 @@ public class CounterData {
                 "Val1;Val2;Val3;Val4;Val5;Val6;Val7;Val8;Val9");
     }
 
-    private void setDataAndHeader(List<String> data) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.M.yyyy HH:mm:ss");
-        //TODO
-        Boolean[] usedField;
-        boolean header = true;
+    private void setData(List<String> data) {
+        if (energyCounter(data.get(0))) {
+            data.remove(0);
+        }
         for (String dataLine : data) {
-            if (!header) {
-                this.data.add(dataLine.split(";"));
-            } else {
-                this.setTypeAndHeader(dataLine);
-                header = false;
-                //TODO
-                usedField = new Boolean[dataHeader.length];
-            }
+            this.data.add(new DataRowFull(dataLine.split(";")));
         }
     }
 }

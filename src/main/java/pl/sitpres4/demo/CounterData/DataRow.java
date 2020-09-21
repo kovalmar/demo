@@ -1,9 +1,9 @@
 package pl.sitpres4.demo.CounterData;
 
 import lombok.Data;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class DataRow {
-    protected LocalDate dateTime;
+    protected Date date;
 }

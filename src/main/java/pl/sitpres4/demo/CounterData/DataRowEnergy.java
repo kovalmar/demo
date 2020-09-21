@@ -16,7 +16,7 @@ public class DataRowEnergy extends DataRow {
         for (int fieldIndex = 0; fieldIndex < 2; fieldIndex++) {
             switch (fieldIndex) {
                 case 0:
-                    this.setDateTime(LocalDate.parse(fields[fieldIndex],formatter));
+                    //this.setDate(LocalDate.parse(fields[fieldIndex],formatter));
                     break;
                 case 1:
                     this.energy1 = Double.parseDouble(fields[fieldIndex]);
