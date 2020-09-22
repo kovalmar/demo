@@ -1,5 +1,6 @@
 package pl.sitpres4.demo.CounterFile;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import pl.sitpres4.demo.Data.DataFromFTP;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CounterFileController {
     @GetMapping("/counters/{number}/files/{year}/{month}")
     public CounterFile counterFile(@PathVariable("number") String number,

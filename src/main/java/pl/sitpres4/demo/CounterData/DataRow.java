@@ -5,5 +5,5 @@ import java.util.Date;
 
 @Data
 public class DataRow {
-    protected Date date;
+    protected Date dateTime;
 }

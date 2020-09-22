@@ -31,9 +31,9 @@ public class DataRowFull extends DataRow {
 
     DataRowFull(String[] dataFields) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.M.yyyy HH:mm:ss");
-        formatter.setTimeZone((TimeZone.getTimeZone("CET")));
+        formatter.setTimeZone((TimeZone.getTimeZone("UTC")));
         try {
-            this.date = formatter.parse(dataFields[0]);
+            this.dateTime = formatter.parse(dataFields[0]);
         }
         catch (ParseException e) { };
         this.energy1 = Double.parseDouble(dataFields[1]);
