@@ -45,7 +45,8 @@ public class CounterData {
             if (!header) {
                 this.data.add(dataLine.split(";"));
             } else {
-                this.setTypeAndHeader(dataLine);
+                this.setTypeAndHeader("DateTime;Energy1;Tariff1;Energy2;Tariff2;Energy3;Tariff3;Energy4;Tariff4;" +
+                        "prąd_faza1;moc_czynna_faza1;moc_bierna_faza1;prąd_f2;moc_czynna_f2;moc_bierna_f2;prąd_f3;moc_czynna_f3;moc_bierna_f3");
                 header = false;
                 //TODO
                 usedField = new Boolean[dataHeader.length];
